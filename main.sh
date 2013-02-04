@@ -1,76 +1,66 @@
 #!/bin/bash
 
+# TODO: Upper case letters
+# TODO: symbols and punctuation
+# TODO: read from pipe
 
-#echo -e "\nWrite sth please... "
-#read -p "Write sth please... " -a input
-#echo "Sentents length : ${#input[@]} words only..."
+PRG=$(basename $0)
 
-#declare -i i=0;
-#declare -i j=0;
-#while [ $i -lt `echo ${#input[@]}` ]; do
-#   
-#    echo -e "\n\t\t${input[i]} of sz:${#input[i]}\n\t   ------------------";
-#   temp[i]=$(echo ${input[i]});
-#
-#   while [ $j -lt `echo ${#input[i]}` ]; do
-#	echo "char $j : ${temp[j]}";
-#	#echo $j;
-#	j+=1;
-#    done
-#
-#    i+=1;
-#done
+function Usage {
+    echo -e "Usage: \t$PRG [Option]";
+    echo -e "\t-h | --help\tDisplay this message"
+}
 
-##------------------------------------------------------##
-##-------------------Alternatively----------------------##
+function map {
+    case $flip in
+	'a') echo -n "ɐ"; continue;;
+	'b') echo -n "q"; continue;;
+	'c') echo -n "ɔ"; continue;;
+	'd') echo -n "p"; continue;;
+	'e') echo -n "ǝ"; continue;;
+	'f') echo -n "ɟ"; continue;;
+	'g') echo -n "ƃ"; continue;;
+	'h') echo -n "ɥ"; continue;;
+	'i') echo -n "ı"; continue;;
+	'j') echo -n "ɾ"; continue;;
+	'k') echo -n "ʞ"; continue;;
+	'l') echo -n "ן"; continue;;
+	'm') echo -n "ɯ"; continue;;
+	'n') echo -n "u"; continue;;
+	#'o') echo -n "o"; continue;;
+	'p') echo -n "d"; continue;;
+	'q') echo -n "b"; continue;;
+	'r') echo -n "ɹ"; continue;;
+	#'s') echo -n "s"; continue;;
+	't') echo -n "ʇ"; continue;;
+	'u') echo -n "n"; continue;;
+	'v') echo -n "ʌ"; continue;;
+	'w') echo -n "ʍ"; continue;;
+	#'x') echo -n "x"; continue;;
+	'y') echo -n "ʎ"; continue;;
+	#'z') echo -n "z"; continue;;
 
-read -p "Write sth please... " ip
-#ip="sth ran off my head just a sec ago";
-#echo ${#foo} 
+	'&')  echo -n "⅋"; continue;;
+	'?') echo -n "¿"; continue;;
+	'!') echo -n "¡"; continue;;
+	'<') echo -n ">"; continue;;
+	'>') echo -n "<"; continue;;
+	*) echo -n $flip;;
+    esac	
+}
 
-thing=(
-    $(
-	i=0; 
-	while [ $i -lt ${#ip} ] ; do
-	    echo ${ip:$i:1} ; 
-	    #i+=1;    
-	    i=$((i+1)) ; 
-	done
-    )
-);
+# checking arguments
+if [ $# -eq 0 ]; then
+    Usage;
+    exit 1;
+fi
 
+text="$@" # $@ can't be used for counting
 
+IFS="" #don't ignore spaces
 
-echo ${thing[@]};
-
-#replace with unicode
-uthing=(
-    $(
-	i=0; 
-	while [ $i -lt ${#thing[@]} ] ; do
-
-	    echo "/^${thing[i]}/p" > file.sed;
-	    ipp=$(echo -e `sed -n -f file.sed a2z.map| cut -f2 -d:`);
-	    echo $ipp;
-	    #echo ${ip:$i:1};
-	    #i+=1;
-	   i=$((i+1)) ; 
-	done
-    )
-);
-
-echo ${uthing[@]} 
-
-rm *.sed
-
-##----------------------------------------------------##
-##----------------------------------------------------##
-
-#convert to unicode
-#con2Uni(){
-#    value=$1; # storing input argument to a value
-#    echo "input arg:" . $1;
-#    echo "/^$value/p"> file.sed;
-#    value=sed  -n -f file.sed map.new;
-#    return $value;
-#}
+for ((i=${#text}; i >= 0; i--)); do    
+    flip=${text:$i:1}
+    map
+done
+echo
