@@ -2,71 +2,68 @@
 
 
 #echo -e "\nWrite sth please... "
-read -p "Write sth please... " -a input
+#read -p "Write sth please... " -a input
+#echo "Sentents length : ${#input[@]} words only..."
 
-#echo -e "\nyou wrote..."
-
-#for i in "${input[@]}";
-#do
-#	echo $i 
+#declare -i i=0;
+#declare -i j=0;
+#while [ $i -lt `echo ${#input[@]}` ]; do
+#   
+#    echo -e "\n\t\t${input[i]} of sz:${#input[i]}\n\t   ------------------";
+#   temp[i]=$(echo ${input[i]});
+#
+#   while [ $j -lt `echo ${#input[i]}` ]; do
+#	echo "char $j : ${temp[j]}";
+#	#echo $j;
+#	j+=1;
+#    done
+#
+#    i+=1;
 #done
-echo "Sentents length : ${#input[@]} words only..."
 
-i=0;
-j=0;
-while [ $i -lt `echo ${#input[@]}` ]; do
-   
-    echo -e "\n\t\t${input[i]} of sz:${#input[i]}\n\t   ------------------";
-    temp=$(echo ${input[i]});
-    while [ $j -lt `echo ${#input[i]}` ]; do
-	#echo "char $j : ${temp[j]}";
-	echo $j;
-	j+=1;
-    done
+##------------------------------------------------------##
+##-------------------Alternatively----------------------##
 
-    i+=1;
-done
+read -p "Write sth please... " ip
+#ip="sth ran off my head just a sec ago";
+#echo ${#foo} 
+
+thing=(
+    $(
+	i=0; 
+	while [ $i -lt ${#ip} ] ; do
+	    echo ${ip:$i:1} ; 
+	    #i+=1;    
+	    i=$((i+1)) ; 
+	done
+    )
+);
 
 
 
-##----------------------------------------------------------------
-input="input not";
-declare -i ai=1; 
-declare -i aj=0;
-while [ $ai -lt ${#input} ] ; 
-do
-    #truncate the complete sentence_string into no. of single word, use space as a seperator
-    inp=$(echo $input|cut -f$ai -d' ');
-    echo -e "\nString $ai: \t${inp}";
-    echo -e '\n-----------------------------';
+echo ${thing[@]};
 
-    aj=0; 
-    
-    
-#    while [ $aj -lt ${#input1[i]} ] ; 
- #   do 
-#	echo ${${input1[i]}:$j:1}; 
-#		     #con2Uni `echo ${${input[i]}:$j:1}` ; 
-#	j=$((j+1)) ; 
- #   done
-  
-   
-    
+#replace with unicode
+uthing=(
+    $(
+	i=0; 
+	while [ $i -lt ${#thing[@]} ] ; do
 
-#thing=(
-#	    $(j=0; 
-#		while [ $j -lt ${#input[i]} ] ; 
-#		do 
-#		    echo ${${input[i]}:$j:1}; 
-#		     #con2Uni `echo ${${input[i]}:$j:1}` ; 
-#		    j=$((j+1)) ; 
-#		done
-#	    )
-#	);
+	    echo "/^${thing[i]}/p" > file.sed;
+	    ipp=$(echo -e `sed -n -f file.sed a2z.map| cut -f2 -d:`);
+	    echo $ipp;
+	    #echo ${ip:$i:1};
+	    #i+=1;
+	   i=$((i+1)) ; 
+	done
+    )
+);
 
-    ai+=1;
-	
-done
+echo ${uthing[@]} 
+
+##----------------------------------------------------##
+##----------------------------------------------------##
+
 #convert to unicode
 #con2Uni(){
 #    value=$1; # storing input argument to a value
