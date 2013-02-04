@@ -2,7 +2,7 @@
 
 
 #echo -e "\nWrite sth please... "
-read -p "Write sth please... " input
+read -p "Write sth please... " -a input
 
 #echo -e "\nyou wrote..."
 
@@ -10,8 +10,27 @@ read -p "Write sth please... " input
 #do
 #	echo $i 
 #done
-echo "length of the $input is ${#input} chars>>includig spaces"
+echo "Sentents length : ${#input[@]} words only..."
 
+i=0;
+j=0;
+while [ $i -lt `echo ${#input[@]}` ]; do
+   
+    echo -e "\n\t\t${input[i]} of sz:${#input[i]}\n\t   ------------------";
+    temp=$(echo ${input[i]});
+    while [ $j -lt `echo ${#input[i]}` ]; do
+	#echo "char $j : ${temp[j]}";
+	echo $j;
+	j+=1;
+    done
+
+    i+=1;
+done
+
+
+
+##----------------------------------------------------------------
+input="input not";
 declare -i ai=1; 
 declare -i aj=0;
 while [ $ai -lt ${#input} ] ; 
