@@ -1,0 +1,121 @@
+;; ne-trans.mim -- Nepail input method with partial transliteration.
+;; Copyright (C) 2012 Rho <rho.rhoit@gmail.com>
+
+;; This file is part of the m17n database; a sub-part of the m17n
+;; library.
+
+;; The m17n library is free software; you can redistribute it and/or
+;; modify it under the terms of the GNU Lesser General Public License
+;; as published by the Free Software Foundation; either version 2.1 of
+;; the License, or (at your option) any later version.
+
+;; The m17n library is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; Lesser General Public License for more details.
+
+;; You should have received a copy of the GNU Lesser General Public
+;; License along with the m17n library; if not, write to the Free
+;; Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 02110-1301, USA.
+
+(input-method ne trans)
+
+(description "Ulta roman
+Author: Rho <rho.rhoit@gmail.com>
+")
+
+(title "ulta")
+
+(map
+ (starter
+  (".") ("~") ("#") ("$") ("^") ("*") ((S-\ )) ((C-@))
+  ("0") ("1") ("2") ("3") ("4")
+  ("5") ("6") ("7") ("8") ("9")
+  ("A") ("C") ("D") ("E") ("G") ("H") ("I") ("J") ("K") ("L")
+  ("M") ("N") ("O") ("R") ("S") ("T") ("U") ("Y")
+  ("a") ("b") ("c") ("d") ("e") ("f") ("g") ("h") ("i")
+  ("j") ("k") ("l") ("m") ("n") ("o") ("p") ("q") ("r")
+  ("s") ("t") ("u") ("v") ("w") ("x") ("y") ("z")
+
+ (consonant
+  ("a" "ɐ")
+  ("b" "q")
+  ("c" "ɔ")
+  ("d" "p")
+  ("e" "ǝ")
+  ("f" "ɟ")
+  ("g" "ƃ")
+  ("h" "ɥ")
+  ("i" "ı")
+  ("j" "ɾ")
+  ("k" "ʞ")
+  ("l" "ן")
+  ("m" "ɯ")
+  ("n" "u")
+  ("p" "d")
+  ("q" "b")
+  ("r" "ɹ")
+  ("t" "ʇ")
+  ("u" "n")
+  ("v" "ʌ")
+  ("w" "ʍ")
+  ("y" "ʎ")
+  ("z" "z")
+  ("&" "⅋")
+  ("?" "¿")
+  ("!' "¡")
+  ("<' ">")
+  (">' "<"))
+
+ (independent
+  ("." ".")
+  ("0" "०")
+  ("1" "१")
+  ("2" "२")
+  ("3" "३")
+  ("4" "४")
+  ("5" "५")
+  ("6" "६")
+  ("7" "७")
+  ("8" "८")
+  ("9" "९")
+  ("]" "़")
+
+ (dependent
+  ("a" (delete @-) "")
+  ("aa" (delete @-) "ा")
+  ("A" (delete @-) "ा")
+  ("i" (delete @-) "ि")
+  ("ii" (delete @-) "ी")
+  ("I" (delete @-) "ी")
+  ("u" (delete @-) "ु")
+  ("uu" (delete @-) "ू")
+  ("U" (delete @-) "ू")
+  ("RRi" (delete @-) "ृ")
+  ("R^i" (delete @-) "ृ")
+  ("e" (delete @-) "े")
+  ("ai" (delete @-) "ै")
+  ("o" (delete @-) "ो")
+  ("au" (delete @-) "ौ")
+ (return
+  ((Return)))
+
+ (backspace
+  ((BackSpace) (undo))))
+
+(state
+ (init
+  (starter (pushback 1) (shift intermediate)))
+
+ (intermediate
+  (consonant (shift second))
+  (independent (shift init))
+  (backspace)
+  (return (shift init)))
+
+ (second
+  (consonant)
+  (dependent (shift init))
+  (backspace)
+  (return (shift init))))
