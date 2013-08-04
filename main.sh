@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # TODO: read from pipe
+# TODO: mirror
 
 PRG=$(basename $0)
 
@@ -15,7 +16,7 @@ function map {
 	'a') echo -n "ɐ"; continue;; 'A') echo -n "∀"; continue;;
 	'b') echo -n "q"; continue;; 'B') echo -n "q"; continue;; #
 	'c') echo -n "ɔ"; continue;; 'C') echo -n "Ɔ"; continue;;
-	'd') echo -n "p"; continue;; 'D') echo -n "p"; continue;; #
+	'd') echo -n "p"; continue;; 'D') echo -n "Ɑ"; continue;; #
 	'e') echo -n "ǝ"; continue;; 'E') echo -n "Ǝ"; continue;; #Ǝ∃
 	'f') echo -n "ɟ"; continue;; 'F') echo -n "߃"; continue;;
 	'g') echo -n "ƃ"; continue;; 'G') echo -n "⅁"; continue;;
@@ -64,15 +65,21 @@ function map {
     esac
 }
 
-# checking arguments
-if [ $# -eq 0 ]; then
-    Usage;
-    exit 1;
-fi
-
-text="$@" # $@ can't be used for counting
 
 IFS="" #don't ignore spaces
+
+# check pipe
+if [ -t 0 ]; then
+    if [ $# -eq 0 ]; then
+	Usage
+	exit 1;
+    fi
+    text="$@" # $@ can't be used for counting
+else
+    while read data; do
+	text+="$data"
+    done
+fi
 
 for ((i=${#text}; i >= 0; i--)); do
     flip=${text:$i:1}
