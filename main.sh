@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # TODO: read from pipe
 # TODO: mirror
@@ -27,18 +27,18 @@ function map {
 	'l') echo -n "⅂"; continue;; 'L') echo -n "˥"; continue;; # Γ
 	'm') echo -n "ɯ"; continue;; 'M') echo -n "W"; continue;;
 	'n') echo -n "u"; continue;; 'N') echo -n "Ͷ"; continue;; # И
-#	'o') echo -n "o"; continue;; 'O') echo -n "O"; continue;;
+        #	'o') echo -n "o"; continue;; 'O') echo -n "O"; continue;;
 	'p') echo -n "d"; continue;; 'P') echo -n "d"; continue;; #
 	'q') echo -n "b"; continue;; 'Q') echo -n "b"; continue;; #
 	'r') echo -n "ɹ"; continue;; 'R') echo -n "ᴚ"; continue;; #ᴚ
-#	's') echo -n "s"; continue;; 'S') echo -n "S"; continue;;
+        #	's') echo -n "s"; continue;; 'S') echo -n "S"; continue;;
 	't') echo -n "ʇ"; continue;; 'T') echo -n "⊥"; continue;;
 	'u') echo -n "n"; continue;; 'U') echo -n "⋂"; continue;;
 	'v') echo -n "ʌ"; continue;; 'V') echo -n "Λ"; continue;; #∧ʌ⋀Λ
 	'w') echo -n "ʍ"; continue;; 'W') echo -n "M"; continue;;
-#	'x') echo -n "x"; continue;; 'X') echo -n "X"; continue;;
+        #	'x') echo -n "x"; continue;; 'X') echo -n "X"; continue;;
 	'y') echo -n "ʎ"; continue;; 'Y') echo -n "⅄"; continue;;
-#	'z') echo -n "z"; continue;; 'Z') echo -n "Z"; continue;;
+        #	'z') echo -n "z"; continue;; 'Z') echo -n "Z"; continue;;
 
 	'&')  echo -n "⅋"; continue;;
 	'?') echo -n "¿"; continue;;
@@ -47,42 +47,42 @@ function map {
 	'{') echo -n "}"; continue;; '}') echo -n "{"; continue;;
 	'/') echo -n '\'; continue;; '\') echo -n '/'; continue;;
 
-	'^') echo -n "ˬ"; continue;;
-	',') echo -n "ˋ"; continue;;#ˊˋ̒
+'^') echo -n "ˬ"; continue;;
+',') echo -n "ˋ"; continue;;#ˊˋ̒
 
 #	'0') echo -n "v"; continue;;
-	'1') echo -n "⥝"; continue;;
-	'2') echo -n "ⵒ"; continue;;
-	'3') echo -n "ɛ"; continue;;
-	#'4') echo -n "4"; continue;;
-	#'5') echo -n "5"; continue;;
-	'6') echo -n "9"; continue;;
-	'7') echo -n "⦣"; continue;;
+'1') echo -n "⥝"; continue;;
+'2') echo -n "ⵒ"; continue;;
+'3') echo -n "ɛ"; continue;;
+#'4') echo -n "4"; continue;;
+#'5') echo -n "5"; continue;;
+'6') echo -n "9"; continue;;
+'7') echo -n "⦣"; continue;;
 #	'8') echo -n "8"; continue;;
-	'9') echo -n "6"; continue;;
+'9') echo -n "6"; continue;;
 
-	*) echo -n $flip;;
-    esac
+*) echo -n $flip;;
+esac
 }
 
 
-IFS="" #don't ignore spaces
+ IFS="" #don't ignore spaces
 
-# check pipe
-if [ -t 0 ]; then
-    if [ $# -eq 0 ]; then
-	Usage
-	exit 1;
-    fi
-    text="$@" # $@ can't be used for counting
-else
-    while read data; do
-	text+="$data"
-    done
-fi
+ # check pipe
+ if [ -t 0 ]; then
+     if [ $# -eq 0 ]; then
+	 Usage
+	 exit 1;
+     fi
+     text="$@" # $@ can't be used for counting
+ else
+     while read data; do
+	 text+="$data"
+     done
+ fi
 
-for ((i=${#text}; i >= 0; i--)); do
-    flip=${text:$i:1}
-    map
-done
-echo
+ for ((i=${#text}; i >= 0; i--)); do
+     flip=${text:$i:1}
+     map
+ done
+ echo
